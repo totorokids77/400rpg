@@ -195,6 +195,71 @@ input.nm{width:100%;padding:13px;border-radius:14px;border:2px solid var(--line)
 .ntab{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:10px 12px;margin-bottom:7px;border-radius:13px;background:#0a07204d;border:1px solid var(--line)}
 .ntab b{font-size:13px}.ntab span{font-size:11.5px;color:var(--sub);display:block}
 .ntab .tg2{margin-left:auto;font-size:11px;font-weight:900;color:var(--bad)}.ntab .tg2.ok{color:var(--ok)}
+#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:15}
+.arena2{position:relative;height:168px;margin:0 10px 4px;border-radius:20px;overflow:hidden;border:2px solid var(--line);box-shadow:0 8px 20px rgba(0,0,0,.45);flex:none;--ch:0}
+.arena2 .sky{position:absolute;inset:0;background:linear-gradient(#5aa8ff,#bfe6ff 62%,#6ec36a 62%)}
+.arena2.z2 .sky{background:linear-gradient(#0d1f2d,#1f4a3a 62%,#12301f 62%)}
+.arena2.z3 .sky{background:linear-gradient(#ff9d52,#ffd9a0 62%,#e0b25f 62%)}
+.arena2.z4 .sky{background:linear-gradient(#1a0b2e,#5a1f55 62%,#2a0f2e 62%)}
+.arena2.boss .sky{filter:saturate(1.4) hue-rotate(-20deg)}
+.arena2.rage::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 40%,#ff1f3d66);animation:pu 1s infinite alternate}
+@keyframes pu{from{opacity:.3}to{opacity:1}}
+.arena2 .props{position:absolute;left:0;right:0;top:34px;height:60px;font-size:34px;white-space:nowrap;opacity:.5;animation:scr 14s linear infinite}
+.arena2.run .props{animation-duration:.8s}
+.arena2 .props span{display:inline-block;margin-right:58px}
+@keyframes scr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.arena2 .gr{position:absolute;left:0;right:0;bottom:0;height:38%;background:repeating-linear-gradient(90deg,#0002 0 22px,transparent 22px 44px);animation:gs 2.4s linear infinite}
+.arena2.run .gr{animation-duration:.25s}
+@keyframes gs{to{background-position:-44px 0}}
+.pl,.foe{position:absolute;bottom:20px;text-align:center;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
+.pl{left:9%}.foe{right:9%}
+.spr{display:block;line-height:1;filter:drop-shadow(0 6px 4px #0007)}
+.pl .spr{font-size:56px;animation:bob 1.6s ease-in-out infinite}
+.foe .spr{font-size:64px;animation:bob 2s ease-in-out infinite;transform-origin:50% 90%}
+.foe.boss .spr{font-size:82px}
+.arena2.run .pl .spr{animation:runb .25s ease-in-out infinite}
+@keyframes runb{50%{transform:translateY(-6px) rotate(6deg)}}
+.pl.dash{transform:translateX(calc(var(--dx,150px)))}
+.foe.lunge{transform:translateX(calc(var(--dx,150px)*-1))}
+.foe.in{animation:slin .6s cubic-bezier(.2,1,.3,1) both}
+@keyframes slin{from{transform:translateX(160px);opacity:0}}
+.foe.hit .spr{animation:hit .45s both;filter:brightness(2) drop-shadow(0 0 12px #fff)}
+.foe.die .spr{animation:dead .7s both}
+.pl.hurt .spr{animation:hit .45s both;filter:brightness(1.6) sepia(1) hue-rotate(-50deg) saturate(5)}
+.pl.down .spr{animation:down .9s both}
+@keyframes down{to{transform:rotate(90deg) translateY(20px);opacity:.4}}
+.foe .nm2{font-size:10.5px;font-weight:900;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
+.foe .fhp{width:84px;height:9px;border-radius:6px;background:#000a;border:1px solid #fff6;margin:2px auto 0;overflow:hidden}
+.foe .fhp i{display:block;height:100%;background:linear-gradient(90deg,#ff3e3e,#ffb02b);transition:width .5s}
+.foe.charge .spr{filter:drop-shadow(0 0 calc(var(--ch)*14px) #ff2a2a)}
+.slash{position:absolute;right:calc(9% - 10px);bottom:36px;width:110px;height:110px;pointer-events:none;opacity:0}
+.slash::before{content:"";position:absolute;inset:0;border-radius:50%;border-top:9px solid #fff;border-right:3px solid transparent;transform:rotate(-35deg);filter:drop-shadow(0 0 8px var(--sc,#fff))}
+.slash.go{animation:sl .38s ease-out both}
+@keyframes sl{0%{opacity:1;transform:scale(.3) rotate(-30deg)}60%{opacity:1}100%{opacity:0;transform:scale(1.3) rotate(30deg)}}
+.atb{position:absolute;left:10px;right:10px;bottom:6px;height:12px;border-radius:8px;background:#000a;border:1px solid #fff5;overflow:hidden}
+.atb i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#3ddc97,#ffe14d);transition:width .12s linear}
+.atb span{position:absolute;inset:0;display:grid;place-items:center;font-size:9.5px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000}
+.arena2.warn .atb i{background:linear-gradient(90deg,#ff3e3e,#ff8a2b);animation:pu .4s infinite alternate}
+.banner{position:absolute;left:0;right:0;top:20px;text-align:center;font-weight:900;font-size:30px;font-style:italic;letter-spacing:.02em;color:#fff;text-shadow:0 0 14px var(--bc,#ffc83d),0 3px 0 #000;pointer-events:none;opacity:0}
+.banner.go{animation:bn 1.1s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes bn{0%{opacity:0;transform:scale(2.4) rotate(-6deg)}20%{opacity:1;transform:scale(1) rotate(-3deg)}80%{opacity:1}100%{opacity:0;transform:scale(1.1) translateY(-16px)}}
+#app.danger::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:12;box-shadow:inset 0 0 70px 14px #ff1f3d88;animation:pu .7s infinite alternate}
+#app.shk{animation:shk .45s both}
+.zoomf{position:fixed;inset:0;pointer-events:none;z-index:14;background:radial-gradient(circle,#fff0 30%,#ffd34dcc);animation:fz .5s both}
+.bar.fury i{background:linear-gradient(90deg,#9a5bff,#ffcf4d)}
+.bar.fury.ready{box-shadow:0 0 12px #ffcf4d;animation:pu .5s infinite alternate}
+.hearts{font-size:17px;letter-spacing:2px}
+.ult{display:block;width:100%;margin-bottom:8px;padding:11px;border-radius:14px;font-weight:900;font-size:15px;color:#fff;background:linear-gradient(90deg,#7a3bff,#ff3b8a,#ffb02b);background-size:200% 100%;animation:ug 1.2s linear infinite,pu .6s infinite alternate;box-shadow:0 0 22px #b45cff}
+@keyframes ug{to{background-position:200% 0}}
+.towercard{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border-radius:20px;padding:14px;margin-bottom:12px;border:1.5px solid #ff7a4d;background:linear-gradient(135deg,#4a1030,#2a1060);box-shadow:0 0 24px #ff5d3a44}
+.towercard .em{font-size:44px}
+.towercard b{font-size:16px;display:block}.towercard span{font-size:12px;color:#ffd0c0}
+.modeRow{display:flex;gap:8px;margin-bottom:12px}
+.modeRow button{flex:1;padding:9px;border-radius:13px;font-weight:900;font-size:13px;background:var(--panel);border:2px solid var(--line);color:var(--sub)}
+.modeRow button.on{border-color:var(--gold);color:var(--ink);background:var(--panel2)}
+.ach{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;margin-bottom:6px;background:#0a07204d;font-size:12.5px;opacity:.45}
+.ach.on{opacity:1;border:1px solid var(--gold);background:#3b2a0c}.ach b{font-size:13px;display:block}.ach span{color:var(--sub);font-size:11px}.ach .ic{font-size:24px}
+
 @media (min-width:520px){body{padding:16px 0}#app{height:calc(100dvh - 32px);border-radius:30px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(80,50,200,.35)}}
 </style>
 </head>
@@ -264,7 +329,7 @@ const view = document.getElementById("view");
 
 /* ---------- state ---------- */
 let S = load();
-function blank(){ return {name:"",cls:"",lv:1,xp:0,gold:60,cleared:{},tag:{},kills:0,pot:{hp:2,mp:1},own:{},eq:{w:"",a:"",x:""},daily:{date:"",kills:0,claimed:0},streak:0,lastClaim:"",snd:1,mus:1,voc:1,wrong:{},study:{},lastPick:{},fs:1,tab:"town",zone:1,bestCombo:0}; }
+function blank(){ return {name:"",cls:"",lv:1,xp:0,gold:60,cleared:{},tag:{},kills:0,pot:{hp:2,mp:1},own:{},eq:{w:"",a:"",x:""},daily:{date:"",kills:0,claimed:0},streak:0,lastClaim:"",snd:1,mus:1,voc:1,wrong:{},study:{},lastPick:{},ach:{},crits:0,tower:{best:0,runs:0},act:1,fs:1,tab:"town",zone:1,bestCombo:0}; }
 function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.cls!==undefined) return Object.assign(blank(),s); }catch(e){} return blank(); }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
 function today(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -379,7 +444,7 @@ function say(t,r,p){ speak(t,"ko",r||1.05,p||1.1); }
 function el(tag,attrs,...kids){
   const e=document.createElement(tag);
   for(const k in (attrs||{})){ const v=attrs[k];
-    if(k==="class") e.className=v; else if(k==="on") for(const ev in v) e.addEventListener(ev,v[ev]); else if(v!==false&&v!=null) e.setAttribute(k,v); }
+    if(k==="class") e.className=v; else if(k==="on") for(const ev in v) e.addEventListener(ev,v[ev]); else if(v!==false&&v!=null&&v!==0) e.setAttribute(k,v); }
   for(const c of kids.flat()) if(c!=null&&c!==false) e.append(c.nodeType?c:document.createTextNode(c));
   return e;
 }
@@ -423,7 +488,7 @@ function shell(content,active){
   const mk=(id,ic,t)=>el("button",{class:active===id?"on":"",on:{click:()=>{SFX.click();tab(id);}}},el("b",null,ic),t);
   show(hud,el("div",{class:"scroll"},content),el("div",{class:"nav"},mk("town","🏠","마을"),mk("quest","🗺️","퀘스트"),mk("shop","🛒","상점"),mk("dex","📖","도감"),mk("me","👤","내 정보")));
 }
-function tab(t){ S.tab=t; save(); stopSpeak(); setMusic("town"); ({town,quest,shop,dex,me}[t]||town)(); }
+function tab(t){ stopTimer(); S.tab=t; save(); stopSpeak(); setMusic("town"); const ap=document.getElementById("app"); if(ap) ap.classList.remove("danger"); ({town,quest,shop,dex,me}[t]||town)(); }
 
 /* ---------- town ---------- */
 function nextQuest(){ for(let z=1;z<=4;z++){ if(!zoneOpen(z)) break; for(let q=(z-1)*20;q<z*20;q++) if(!qDone(q)) return q; } return -1; }
@@ -444,7 +509,9 @@ function town(){
     el("button",{class:"btn",on:{click:()=>startQuest(nq>=0?nq:0)}},nq>=0?"⚔️ 모험 계속하기":"🔁 복습 전투"));
   const prog=el("div",{class:"panel"},el("h3",null,"🗺️ 왕국 지도",el("small",null,cleared()+" / "+N+" 처치")),ZONES.map((z,i)=>el("div",{style:"margin-bottom:8px"},el("div",{class:"lbl"},el("span",null,z.ic+" "+z.n+(zoneOpen(i+1)?"":" 🔒")),el("span",null,zoneClear(i+1)+" / 100")),el("div",{class:"bar xp"},el("i",{style:`width:${zoneClear(i+1)}%`})))));
   const cp=el("div",{class:"panel chat"},el("h3",null,"💬 마을 소식",el("small",null,"NPC 모험가")),chat.map(c=>el("p",null,el("b",null,c[0]+": "),c[1])));
-  shell([hero,dcard,prog,cp],"town");
+  const tw=el("button",{class:"towercard",on:{click:()=>startTower()}},el("div",{class:"em"},"🗼"),el("div",null,el("b",null,"무한의 탑 · 서바이벌"),el("span",null,"하트 3개로 끝없이! 층마다 시간이 줄어요 · 최고 "+(S.tower.best||0)+"층")));
+  const mode=el("div",{class:"modeRow"},el("button",{class:S.act!==0?"on":"",on:{click:()=>{S.act=1;save();town();}}},"⚡ 액션 모드 (제한시간)"),el("button",{class:S.act===0?"on":"",on:{click:()=>{S.act=0;save();town();}}},"📖 연습 모드 (시간 무제한)"));
+  shell([hero,mode,tw,dcard,prog,cp],"town");
 }
 
 /* ---------- quest ---------- */
@@ -504,7 +571,8 @@ function me(){
     el("button",{class:"btn kakao",on:{click:shareChar}},"💬 내 캐릭터 카톡으로 자랑하기"),el("div",{style:"height:10px"}),
     el("div",{class:"row"},el("button",{class:"btn ghost",on:{click:()=>{S.mus=S.mus?0:1;save();applyMusic();me();}}},S.mus?"🎵 배경음악 켬":"🔇 배경음악 끔"),el("button",{class:"btn ghost",on:{click:()=>{S.snd=S.snd?0:1;save();me();}}},S.snd?"🔊 효과음 켬":"🔇 효과음 끔")),el("div",{style:"height:10px"}),el("div",{class:"row"},el("button",{class:"btn ghost",on:{click:()=>{S.voc=S.voc?0:1;save();if(S.voc)say("음성 안내를 켰어요!");else stopSpeak();me();}}},S.voc?"🗣️ 음성 안내 켬":"🤐 음성 안내 끔"),el("button",{class:"btn ghost",on:{click:()=>{S.fs=(S.fs+1)%3;save();document.documentElement.style.setProperty("--fs",[14.5,16,18][S.fs]+"px");toast("글자 크기 "+["작게","보통","크게"][S.fs]);}}},"가 글자 크기")),
     el("div",{style:"height:10px"}),el("button",{class:"btn ghost",on:{click:()=>{if(confirm("캐릭터와 모든 진행 상황을 지울까요?")){S=blank();save();create();}}}},"🗑️ 새로 시작"));
-  shell([st,rk,set],"me");
+  const ach=el("div",{class:"panel"},el("h3",null,"🏅 업적",el("small",null,Object.keys(S.ach||{}).length+" / "+ACH.length)),ACH.map(a=>el("div",{class:"ach"+(S.ach&&S.ach[a[0]]?" on":"")},el("div",{class:"ic"},a[1]),el("div",null,el("b",null,a[2]),el("span",null,a[3])))));
+  shell([st,ach,rk,set],"me");
 }
 
 
@@ -608,119 +676,252 @@ function review(n){
   draw();
 }
 
-/* ---------- battle ---------- */
-let B=null;
+/* ---------- FX canvas ---------- */
+const $=id=>document.getElementById(id);
+let FX=null,fxp=[],fxRun=false,fxT=0;
+function fxInit(){ if(FX) return; FX=document.createElement("canvas"); FX.id="fx"; document.body.append(FX); const f=()=>{ FX.width=innerWidth; FX.height=innerHeight; }; f(); addEventListener("resize",f); }
+function fxKick(){ fxInit(); if(!fxRun){ fxRun=true; fxT=performance.now(); requestAnimationFrame(fxLoop); } }
+function fxLoop(t){
+  const ctx=FX.getContext("2d"); const dt=Math.min(.05,(t-fxT)/1000); fxT=t; ctx.clearRect(0,0,FX.width,FX.height);
+  fxp=fxp.filter(p=>p.l>0);
+  for(const p of fxp){ p.l-=dt; p.x+=p.vx*dt*60; p.y+=p.vy*dt*60; p.vy+=p.g*dt*60; const a=Math.max(0,p.l/p.m);
+    ctx.globalAlpha=a;
+    if(p.k==="r"){ ctx.strokeStyle=p.c; ctx.lineWidth=4*a+1; ctx.beginPath(); ctx.arc(p.x,p.y,p.s*(1-a)+8,0,7); ctx.stroke(); }
+    else if(p.k==="c"){ ctx.fillStyle="#ffd34d"; ctx.strokeStyle="#a36b00"; ctx.lineWidth=2; ctx.beginPath(); ctx.ellipse(p.x,p.y,p.s,p.s*Math.abs(Math.cos(p.l*9)),0,0,7); ctx.fill(); ctx.stroke(); }
+    else { ctx.fillStyle=p.c; ctx.shadowColor=p.c; ctx.shadowBlur=8; ctx.fillRect(p.x-p.s/2,p.y-p.s/2,p.s,p.s); ctx.shadowBlur=0; } }
+  ctx.globalAlpha=1;
+  if(fxp.length) requestAnimationFrame(fxLoop); else { fxRun=false; ctx.clearRect(0,0,FX.width,FX.height); }
+}
+function burst(x,y,col,n,sp){ for(let i=0;i<n;i++){ const a=Math.random()*6.283,v=(.4+Math.random())*sp; fxp.push({k:"s",x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,g:.18,l:.6+Math.random()*.5,m:1,c:Array.isArray(col)?col[i%col.length]:col,s:3+Math.random()*5}); } fxKick(); }
+function ringFx(x,y,col){ fxp.push({k:"r",x,y,vx:0,vy:0,g:0,l:.45,m:.45,c:col,s:70}); fxKick(); }
+function coinFx(x,y,n){ for(let i=0;i<n;i++){ fxp.push({k:"c",x,y,vx:(Math.random()-.5)*7,vy:-5-Math.random()*5,g:.35,l:1.2+Math.random()*.5,m:1.5,s:7}); } fxKick(); }
+function ctr(e){ if(!e) return [innerWidth/2,innerHeight/3]; const r=e.getBoundingClientRect(); return [r.left+r.width/2,r.top+r.height/2]; }
+function banner(t,col){ const b=$("banner"); if(!b) return; b.textContent=t; b.style.setProperty("--bc",col||"#ffc83d"); b.classList.remove("go"); void b.offsetWidth; b.classList.add("go"); }
+function shakeApp(){ const a=$("app"); a.classList.remove("shk"); void a.offsetWidth; a.classList.add("shk"); setTimeout(()=>a.classList.remove("shk"),480); }
+function flashGold(){ const f=el("div",{class:"zoomf"}); document.body.append(f); setTimeout(()=>f.remove(),520); }
+function dmgTxt(txt,col,e,big){ const [x,y]=ctr(e); const f=el("div",{class:"float"},txt); f.style.color=col; f.style.left=(x-30)+"px"; f.style.top=(y-50)+"px"; if(big) f.style.fontSize="38px"; document.body.append(f); setTimeout(()=>f.remove(),1150); }
+SFX.slash=()=>{ tone(1300,.06,"sawtooth",.06); tone(700,.1,"square",.05,.04); tone(300,.14,"sawtooth",.05,.08); };
+SFX.boom=()=>{ tone(90,.35,"sawtooth",.1); tone(60,.45,"square",.08,.05); };
+SFX.tick=()=>tone(1000,.04,"square",.04);
+SFX.ult=()=>{ [220,277,330,440,554,660,880,1109,1319].forEach((f,i)=>tone(f,.18,"sawtooth",.05,i*.05)); };
+SFX.chest=()=>{ [784,988,1175,1568].forEach((f,i)=>tone(f,.12,"triangle",.06,i*.07)); };
+
+/* ---------- achievements ---------- */
+const ACH=[
+ ["a1","🥇","첫 승리","몬스터 1마리 처치",()=>S.kills>=1],
+ ["a2","⚡","5연속 콤보","콤보 5 달성",()=>S.bestCombo>=5],
+ ["a3","🌪️","10연속 콤보","콤보 10 달성",()=>S.bestCombo>=10],
+ ["a4","💥","크리티컬 마스터","힌트 없이 20회 처치",()=>(S.crits||0)>=20],
+ ["a5","🗡️","50마리 사냥꾼","몬스터 50마리 처치",()=>cleared()>=50],
+ ["a6","📘","대의 파악 학자","몬스터 200마리 처치",()=>cleared()>=200],
+ ["a7","👑","보스 슬레이어","보스 퀘스트 1개 클리어",()=>[19,39,59,79].some(q=>qDone(q))],
+ ["a8","🔟","레벨 10","레벨 10 달성",()=>S.lv>=10],
+ ["a9","🗼","탑 10층","무한의 탑 10층 도달",()=>(S.tower.best||0)>=10],
+ ["a10","📚","해설 정복자","해설 20문제 정복",()=>Object.keys(S.study||{}).length>=20]
+];
+function checkAch(){ S.ach=S.ach||{}; ACH.forEach(a=>{ if(!S.ach[a[0]]&&a[4]()){ S.ach[a[0]]=1; S.gold+=50; save(); setTimeout(()=>{ toast("🏅 업적 달성: "+a[2]+"  (+50 🪙)"); SFX.chest(); },700); } }); }
+
+/* ---------- ACTION BATTLE ---------- */
+let B=null,TM=null;
+const ZPROP=[["🌳","🌾","🌼","🦋"],["🌲","🍄","🦉","🌲"],["🌵","🏺","☀️","🦂"],["🏰","🔥","🦇","💀"]];
+const ULT={w:["🔥","분노의 일격","오답 2개 소거 + HP 25 회복"],m:["☄️","메테오","오답 3개 소거"],r:["⏳","시간 정지","15초 정지 + 핵심 문장 감정"]};
+const HSPR={w:"🦸",m:"🧙",r:"🥷"};
+function stopTimer(){ if(TM){ clearInterval(TM); TM=null; } }
+function timed(){ return B&&(B.tower||B.act); }
+function secsFor(){ const n=B.list[B.i], z=D[n].lv; if(B.tower) return Math.max(12,34-2*Math.floor(B.i/3)); const boss=!B.tower&&B.q%20===19; let s=65-z*5; if(boss){ const L=B.list.length, ph=B.i<L-3?1:B.i<L-1?2:3; s=s-8; s*= [1,.85,.7][ph-1]; } return Math.round(s); }
+function fresh(){ return {sel:null,tip:0,key:0,elim:[],done:0,ok:0,msg:"",rew:null,busy:0,t:null,tmax:0}; }
 function startQuest(q){
   if(!zoneOpen(Math.floor(q/20)+1)){ toast("🔒 아직 열리지 않은 지역이에요"); return; }
   let list=qItems(q).filter(n=>!S.cleared[n]), replay=false;
   if(!list.length){ list=qItems(q); replay=true; }
-  B={q,list,i:0,hp:maxHP(),mp:maxMP(),combo:0,maxCombo:0,xp:0,gold:0,kills:0,shield:sum("shield")>0,replay,res:[],cur:fresh(),ups:[]};
-  battle();
+  B={q,list,i:0,hp:maxHP(),mp:maxMP(),combo:0,maxCombo:0,xp:0,gold:0,kills:0,shield:sum("shield")>0,replay,res:[],cur:fresh(),ups:[],fury:0,act:S.act!==0,tower:false,freeze:0};
+  battle(true);
 }
-function fresh(){ return {sel:null,tip:0,key:0,elim:[],done:0,ok:0,msg:"",rew:null}; }
-function bossQ(){ return B.q%20===19; }
+function towerPick(){ const lvmax=Math.min(4,1+Math.floor(B.list.length/6)+1); let n,g=0; do{ n=Math.floor(Math.random()*400); g++; }while((D[n].lv>lvmax||B.list.slice(-12).includes(n))&&g<80); return n; }
+function startTower(){
+  B={tower:true,q:-1,list:[],i:0,hp:3,mp:0,combo:0,maxCombo:0,xp:0,gold:0,kills:0,shield:false,replay:true,res:[],cur:fresh(),ups:[],fury:0,act:true,freeze:0};
+  B.list.push(towerPick()); battle(true);
+}
 function elimOrder(n){ const it=D[n],pri={"이":0,"상":1,"반":2,"비":3,"과":4,"세":5,"부":6}; return it.c.map((_,j)=>j).filter(j=>j!==it.a).sort((x,y)=>pri[it.t[x]]-pri[it.t[y]]); }
 function layer(sc){ const back=sc.querySelector(".back"),sheet=sc.querySelector(".sheet"); sheet.style.setProperty("--sh",Math.max(240,sc.clientHeight-26)+"px"); const upd=()=>{ const bh=back.offsetHeight||1; sc.style.setProperty("--p",Math.max(0,Math.min(1,sc.scrollTop/(bh*.5))).toFixed(3)); }; sc.addEventListener("scroll",upd,{passive:true}); upd(); }
-function battle(keep){
-  const n=B.list[B.i], it=D[n], c=B.cur, mon=monOf(n), done=!!c.done, co=costs();
-  setMusic(musicFor('battle',n));
-  if(!c.intro){ c.intro=1; stopSpeak(); if(mon.boss) setTimeout(()=>say('보스 등장! '+mon.name,.95,.8),250); }
-  const prev=view.querySelector(".scroll"), top=keep&&prev?prev.scrollTop:0;
-  const hud=el("div",{class:"bhud"},el("button",{class:"x",on:{click:()=>{ if(confirm("전투에서 도망칠까요? (처치한 몬스터는 유지됩니다)")){ B=null; tab("quest"); } }}},"🏃"),
-    el("div",{class:"bars"},bar("hp",B.hp,maxHP(),"❤️ HP"),el("div",{style:"height:4px"}),bar("mp",B.mp,maxMP(),"💧 MP")),el("button",{class:"x",on:{click:()=>{S.mus=S.mus?0:1;save();applyMusic();toast(S.mus?"🎵 음악 켬":"🔇 음악 끔");battle(true);}}},S.mus?"🎵":"🔇"),el("div",{class:"combo"},B.combo>1?"🔥 "+B.combo:""));
-  const pips=el("div",{class:"qpips"},B.list.map((x,k)=>el("i",{class:k<B.i?(B.res[k]?"win":"lose"):(k===B.i?"on":"")})));
-  const arena=el("div",{class:"arena"},el("div",{class:"mon"+(mon.boss?" boss":""),id:"mon"},mon.ic),
-    el("div",{class:"minfo"},el("b",null,(mon.boss?"👑 보스 · ":"")+mon.name),el("span",null,"Lv."+(it.lv*10-5+Math.floor(n%100/10))+" · "+TYPES[it.ty]+" · "+it.tp),el("div",{style:"height:5px"}),el("div",{class:"bar mon"},el("i",{style:`width:${done&&c.ok?0:100}%`}))));
-  const showKey=c.key||done;
-  const p=D[n].p,k=D[n].k,at=showKey?p.indexOf(k):-1;
-  const pass=el("div",{class:"scroll-card"},el("div",{class:"qs"},"📜 "+STEMS[it.ty]));
-  if(at<0) pass.append(p); else pass.append(p.slice(0,at),el("mark",null,k),p.slice(at+k.length));
-  pass.append(el("button",{id:"spk",class:"btn ghost",style:"margin-top:10px;padding:8px;font-size:13px;color:#3b2a14;background:#ead9b4;border-color:#b8975a;box-shadow:0 3px 0 #b8975a",on:{click:()=>{ if(curU){ stopSpeak(); refreshSpeakBtn(); } else { speak(p,"en",.88,1,true); refreshSpeakBtn(); } }}},curU?"⏹ 멈춤":"🔊 지문 듣기"));
-  pass.append(el("div",{class:"swipe"},"▼ 아래로 스크롤하면 공격 스킬(선지)이 떠올라요"));
-  const back=el("div",{class:"back"},arena,pass);
-  const sheet=el("div",{class:"sheet"},el("div",{class:"grab"}));
-  if(c.tip||done) sheet.append(el("div",{class:"tipbox"},el("b",null,"📜 고대 서적  "),TIPS[it.ty]));
-  if(c.key&&!done) sheet.append(el("div",{class:"tipbox"},el("b",null,"🔍 감정  "),"노란 표시가 이 글의 핵심 문장이에요."));
+function bmon(n){ const it=D[n], z=ZONES[it.lv-1]; const cb=!B.tower&&B.q%20===19, tb=B.tower&&(B.i+1)%5===0; if(cb||tb) return {ic:z.boss[0],name:z.boss[1],boss:true,camp:cb}; return Object.assign({camp:false},monOf(n)); }
+function bossPhase(){ if(B.tower||B.q%20!==19) return 1; const L=B.list.length; return B.i<L-3?1:B.i<L-1?2:3; }
+function foeFrac(){ const c=B.cur, mon=bmon(B.list[B.i]); if(mon.camp){ const L=B.list.length; return Math.max(0,(L-B.i-(c.done&&c.ok?1:0))/L); } return c.done&&c.ok?0:1; }
+
+function battle(newScreen){
+  const n=B.list[B.i], it=D[n], c=B.cur, mon=bmon(n), z=it.lv;
+  stopSpeak(); setMusic(B.tower?(mon.boss?"boss":"z"+Math.min(4,z+1)):(mon.camp?"boss":"z"+z));
+  if(c.t==null){ c.tmax=secsFor(); c.t=c.tmax; }
+  const hud=el("div",{class:"bhud",id:"hud"});
+  const pips=B.tower?el("div",{class:"qpips"}):el("div",{class:"qpips"},B.list.map((x,k)=>el("i",{class:k<B.i?(B.res[k]?"win":"lose"):(k===B.i?"on":"")})));
+  const props=[0,1].flatMap(()=>ZPROP[z-1]).map(x=>el("span",null,x));
+  const arena=el("div",{class:"arena2 z"+z+(mon.boss?" boss":"")+" run",id:"arena"},el("div",{class:"sky"}),el("div",{class:"props"},props),el("div",{class:"gr"}),
+    el("div",{class:"pl",id:"hero"},el("span",{class:"spr"},HSPR[S.cls])),
+    el("div",{class:"foe in"+(mon.boss?" boss":""),id:"foe"},el("div",{class:"nm2"},(mon.boss?"👑 ":"")+mon.name),el("div",{class:"fhp"},el("i",{id:"fhp",style:"width:100%"})),el("span",{class:"spr",id:"mon"},mon.ic)),
+    el("div",{class:"slash",id:"slash"}),el("div",{class:"banner",id:"banner"}),
+    timed()?el("div",{class:"atb"},el("i",{id:"atb"}),el("span",{id:"tm"})):null);
+  setTimeout(()=>{ const a=$("arena"); if(a) a.classList.remove("run"); },650);
+  const pass=el("div",{class:"scroll-card",id:"pass"});
+  const back=el("div",{class:"back"},pass);
+  const sheet=el("div",{class:"sheet",id:"sheet"});
+  const scroll=el("div",{class:"scroll stage",id:"stg"},back,sheet);
+  show(hud,pips,arena,scroll,el("div",{class:"bbar",id:"bbar"}));
+  const hx=$("hero"), fx=$("foe"); const dx=Math.max(80,fx.getBoundingClientRect().left-hx.getBoundingClientRect().right+30); $("arena").style.setProperty("--dx",dx+"px"); hx.style.setProperty("--dx",dx+"px"); fx.style.setProperty("--dx",dx+"px");
+  renderPass(); renderSheet(); renderBar(); updHud(); updTimer(); layer(scroll); startTimer();
+  if(mon.boss&&!c.intro){ c.intro=1; setTimeout(()=>{ banner(mon.camp?"BOSS BATTLE!":"BOSS FLOOR!","#ff3b5c"); SFX.boom(); say("보스 등장! "+mon.name,.95,.8); },450); }
+  c.intro=1; updPhase(true);
+}
+function updPhase(init){ const a=$("arena"); if(!a||!B) return; const ph=bossPhase(); a.classList.toggle("rage",ph>=2); if(!init) return; if(ph===2&&!B.cur.pw){ B.cur.pw=1; setTimeout(()=>{ banner("⚠️ 보스 격노!","#ff3b5c"); say("보스가 격노했다!",1,.8); },900); } if(ph===3&&!B.cur.pw){ B.cur.pw=1; setTimeout(()=>{ banner("☠️ 최후의 발악!","#ff3b5c"); },900); } }
+function updHud(){
+  const h=$("hud"); if(!h||!B) return; const c=B.cur;
+  const flee=el("button",{class:"x",on:{click:()=>{ if(confirm(B.tower?"탑에서 내려갈까요? (현재까지 보상은 받아요)":"전투에서 도망칠까요? (처치한 몬스터는 유지됩니다)")){ stopTimer(); if(B.tower){ endTower(); } else { B=null; tab("quest"); } } }}},"🏃");
+  const mus=el("button",{class:"x",on:{click:()=>{S.mus=S.mus?0:1;save();applyMusic();updHud();}}},S.mus?"🎵":"🔇");
+  const fury=el("div",{class:"bar fury"+(B.fury>=100?" ready":"")},el("i",{style:`width:${Math.min(100,B.fury)}%`}));
+  const bars=B.tower?el("div",{class:"bars"},el("div",{class:"lbl"},el("span",{class:"hearts"},"❤️".repeat(Math.max(0,B.hp))+"🖤".repeat(Math.max(0,3-B.hp))),el("span",null,"🗼 "+(B.i+1)+"층")),el("div",{style:"height:3px"}),el("div",{class:"lbl"},el("span",null,"🌟 분노 게이지"),el("span",null,Math.min(100,Math.round(B.fury))+"%")),fury)
+   :el("div",{class:"bars"},bar("hp",B.hp,maxHP(),"❤️ HP"),el("div",{style:"height:3px"}),bar("mp",B.mp,maxMP(),"💧 MP"),el("div",{style:"height:3px"}),fury);
+  h.replaceChildren(flee,bars,mus,el("div",{class:"combo"},B.combo>1?"🔥"+B.combo:""));
+  $("app").classList.toggle("danger",B.tower?B.hp<=1:B.hp/maxHP()<.3&&B.hp>0);
+}
+function updTimer(){ const a=$("atb"); if(!a||!B) return; const c=B.cur; a.style.width=(c.t/c.tmax*100)+"%"; const t=$("tm"); if(t) t.textContent=(B.freeze>0?"⏳ 정지 ":"⏱ ")+Math.ceil(c.t)+"초"; const ar=$("arena"); if(ar){ ar.classList.toggle("warn",c.t/c.tmax<.25&&!c.done); ar.style.setProperty("--ch",(1-c.t/c.tmax).toFixed(2)); } const f=$("foe"); if(f) f.classList.toggle("charge",c.t/c.tmax<.5&&!c.done); }
+function startTimer(){ stopTimer(); const c=B.cur; if(!timed()||c.done) return;
+  TM=setInterval(()=>{ if(!B||c.done||c.busy||document.hidden) return; if(B.freeze>0){ B.freeze-=.1; updTimer(); return; } c.t-=.1; if(c.t<=0){ c.t=0; updTimer(); stopTimer(); timeoutHit(); return; } const s=Math.ceil(c.t); if(c.t<10&&s!==c.ls){ c.ls=s; SFX.tick(); } updTimer(); },100); }
+function renderPass(){
+  const n=B.list[B.i], it=D[n], c=B.cur, p=it.p, k=it.k, box=$("pass"); const sk=c.key||c.done, at=sk?p.indexOf(k):-1;
+  box.replaceChildren(el("div",{class:"qs"},"📜 "+STEMS[it.ty]),...(at<0?[p]:[p.slice(0,at),el("mark",null,k),p.slice(at+k.length)]),
+    el("button",{id:"spk",class:"btn ghost",style:"margin-top:10px;padding:8px;font-size:13px;color:#3b2a14;background:#ead9b4;border-color:#b8975a;box-shadow:0 3px 0 #b8975a",on:{click:()=>{ if(curU){ stopSpeak(); refreshSpeakBtn(); } else { speak(p,"en",.88,1,true); refreshSpeakBtn(); } }}},curU?"⏹ 멈춤":"🔊 지문 듣기"),
+    el("div",{class:"swipe"},"▼ 아래로 스크롤하면 공격 스킬(선지)이 떠올라요"));
+}
+function renderSheet(){
+  const n=B.list[B.i], it=D[n], c=B.cur, done=!!c.done, sheet=$("sheet"); const kids=[el("div",{class:"grab"})];
+  if(c.tip||done) kids.push(el("div",{class:"tipbox"},el("b",null,"📜 고대 서적  "),TIPS[it.ty]));
+  if(c.key&&!done) kids.push(el("div",{class:"tipbox"},el("b",null,"🔍 감정  "),"노란 표시가 이 글의 핵심 문장이에요."));
   const chs=el("div",{class:"choices"});
   it.c.forEach((txt,j)=>{
-    const el_=c.elim.includes(j); let cls="ch";
-    if(done){ if(j===it.a) cls+=" right"; else if(j===c.sel) cls+=" wrong"; else if(el_) cls+=" elim"; } else { if(el_) cls+=" elim"; else if(j===c.sel) cls+=" sel"; }
+    const e_=c.elim.includes(j); let cls="ch";
+    if(done){ if(j===it.a) cls+=" right"; else if(j===c.sel) cls+=" wrong"; else if(e_) cls+=" elim"; } else { if(e_) cls+=" elim"; else if(j===c.sel) cls+=" sel"; }
     const body=el("span",{class:"tx"},el("span",{class:"m"},txt));
-    if(done){ body.append(el("span",{class:"why"},j===it.a?el("span",{class:"tag okt"},"정답"):el("span",{class:"tag"},TRAPS[it.t[j]][0]+" "+TRAPS[it.t[j]][1]),it.r[j])); }
-    else if(el_){ body.append(el("span",{class:"why"},el("span",{class:"tag hx"},"소거"),TRAPS[it.t[j]][0]+" "+TRAPS[it.t[j]][1]+"의 함정이었다!")); }
-    chs.append(el("button",{class:cls,disabled:(done||el_)?true:false,on:{click:()=>{ if(done||el_) return; c.sel=(c.sel===j?null:j); SFX.click(); battle(true); }}},el("span",{class:"n"},"①②③④⑤"[j]),body));
+    if(done&&!c.busy){ body.append(el("span",{class:"why"},j===it.a?el("span",{class:"tag okt"},"정답"):el("span",{class:"tag"},TRAPS[it.t[j]][0]+" "+TRAPS[it.t[j]][1]),it.r[j])); }
+    else if(e_){ body.append(el("span",{class:"why"},el("span",{class:"tag hx"},"소거"),TRAPS[it.t[j]][0]+" "+TRAPS[it.t[j]][1]+"의 함정이었다!")); }
+    chs.append(el("button",{class:cls,disabled:(done||e_||c.busy)?true:false,on:{click:()=>{ if(c.done||c.busy||e_) return; if(c.sel===j){ strike(); return; } c.sel=j; SFX.click(); renderSheet(); renderBar(); }}},el("span",{class:"n"},"①②③④⑤"[j]),body));
   });
-  sheet.append(chs);
-  if(done&&c.msg) sheet.append(el("div",{class:"result"+(c.ok?"":" no")},el("h4",null,c.msg),el("div",{style:"font-size:13px"},"정답은 "+"①②③④⑤"[it.a]+"번 · "+it.r[it.a]),c.rew?el("div",{class:"rew"},c.rew.map(r=>el("span",null,r))):null,el("button",{class:"btn ghost",style:"margin-top:10px",on:{click:()=>{ if(curU){stopSpeak();} else speak("정답은 "+(it.a+1)+"번. "+it.r[it.a],"ko",1,1,true); }}},"🎧 해설 듣기")));
-  if(done){ c.xs=c.xs||{xt:0,seen:[0]}; sheet.append(explainPanel(n,c.xs,c.sel,()=>battle(true))); }
-  const scroll=el("div",{class:"scroll stage"},back,sheet);
-  let bb;
-  if(!done){
-    const sk=(id,ic,t,cost,used,dis,fn)=>el("button",{class:"sk"+(used?" used":""),disabled:dis,on:{click:fn}},el("b",null,ic),t,el("small",null,used?"사용함":"MP "+cost));
-    bb=el("div",{class:"bbar"},el("div",{class:"skills"},
-      sk("tip","📜","서적",co.tip,c.tip,c.tip||B.mp<co.tip,()=>{B.mp-=co.tip;c.tip=1;SFX.click();battle(true);}),
-      sk("key","🔍","감정",co.key,c.key,c.key||B.mp<co.key,()=>{B.mp-=co.key;c.key=1;SFX.click();battle(true);}),
-      sk("elim","💣","소거",co.elim,c.elim.length>=2,c.elim.length>=2||B.mp<co.elim,()=>{const nx=elimOrder(n).find(j=>!c.elim.includes(j));B.mp-=co.elim;c.elim.push(nx);if(c.sel===nx)c.sel=null;SFX.click();battle(true);}),
-      el("button",{class:"sk",disabled:S.pot.hp<1||B.hp>=maxHP(),on:{click:()=>{S.pot.hp--;B.hp=Math.min(maxHP(),B.hp+50);save();SFX.coin();floatTxt("+50 HP","#7dff9e");battle(true);}}},el("b",null,"❤️"),"체력",el("small",null,"x"+S.pot.hp)),
-      el("button",{class:"sk",disabled:S.pot.mp<1||B.mp>=maxMP(),on:{click:()=>{S.pot.mp--;B.mp=Math.min(maxMP(),B.mp+15);save();SFX.coin();floatTxt("+15 MP","#7fd1ff");battle(true);}}},el("b",null,"💧"),"마나",el("small",null,"x"+S.pot.mp))),
-      el("button",{class:"btn",disabled:c.sel==null,on:{click:()=>attack()}},c.sel==null?"공격할 선지를 고르세요":"⚔️ 공격!"));
-  } else {
-    const last=B.i>=B.list.length-1, dead=B.hp<=0;
-    bb=el("div",{class:"bbar"},el("button",{class:"btn",on:{click:()=>{ if(dead) return defeat(); if(last) return endRun(); B.i++; B.cur=fresh(); battle(); }}},dead?"💀 ...":(last?"🏁 퀘스트 결과":"👉 다음 몬스터")));
-  }
-  show(hud,pips,scroll,bb);
-  const sc=view.querySelector(".scroll.stage"); layer(sc); if(top){ sc.scrollTop=top; sc.dispatchEvent(new Event("scroll")); }
+  kids.push(chs);
+  if(done&&!c.busy&&c.msg){ kids.push(el("div",{class:"result"+(c.ok?"":" no")},el("h4",null,c.msg),el("div",{style:"font-size:13px"},"정답은 "+"①②③④⑤"[it.a]+"번 · "+it.r[it.a]),c.rew?el("div",{class:"rew"},c.rew.map(r=>el("span",null,r))):null,el("button",{class:"btn ghost",style:"margin-top:10px",on:{click:()=>{ if(curU){stopSpeak();} else speak("정답은 "+(it.a+1)+"번. "+it.r[it.a],"ko",1,1,true); }}},"🎧 해설 듣기"))); }
+  if(done&&!c.busy){ c.xs=c.xs||{xt:0,seen:[0]}; kids.push(explainPanel(n,c.xs,c.sel,()=>renderSheet())); }
+  sheet.replaceChildren(...kids);
 }
-function attack(){
-  const n=B.list[B.i], it=D[n], c=B.cur, z=it.lv, boss=bossQ()&&B.i===B.list.length-1&&B.list.length>=1&&(n%PER===PER-1);
-  c.done=1; c.ok=c.sel===it.a?1:0; const mon=document.getElementById("mon");
+function renderBar(){
+  const bb=$("bbar"); const n=B.list[B.i], it=D[n], c=B.cur, co=costs(); const kids=[];
+  if(!c.done){
+    if(B.fury>=100) kids.push(el("button",{class:"ult",disabled:c.busy?true:false,on:{click:useUlt}},ULT[S.cls][0]+" 궁극기 · "+ULT[S.cls][1]+"  ("+ULT[S.cls][2]+")"));
+    if(!B.tower){
+      const sk=(ic,t,cost,used,dis,fn)=>el("button",{class:"sk"+(used?" used":""),disabled:dis||c.busy,on:{click:fn}},el("b",null,ic),t,el("small",null,used?"사용함":"MP "+cost));
+      kids.push(el("div",{class:"skills"},
+        sk("📜","서적",co.tip,c.tip,c.tip||B.mp<co.tip,()=>{B.mp-=co.tip;c.tip=1;SFX.click();renderSheet();renderBar();updHud();}),
+        sk("🔍","감정",co.key,c.key,c.key||B.mp<co.key,()=>{B.mp-=co.key;c.key=1;SFX.click();renderPass();renderSheet();renderBar();updHud();}),
+        sk("💣","소거",co.elim,c.elim.length>=2,c.elim.length>=2||B.mp<co.elim,()=>{const nx=elimOrder(n).find(j=>!c.elim.includes(j));B.mp-=co.elim;c.elim.push(nx);if(c.sel===nx)c.sel=null;SFX.click();renderSheet();renderBar();updHud();}),
+        el("button",{class:"sk",disabled:S.pot.hp<1||B.hp>=maxHP()||c.busy,on:{click:()=>{S.pot.hp--;B.hp=Math.min(maxHP(),B.hp+50);save();SFX.coin();dmgTxt("+50 HP","#7dff9e",$("hero"));updHud();renderBar();}}},el("b",null,"❤️"),"체력",el("small",null,"x"+S.pot.hp)),
+        el("button",{class:"sk",disabled:S.pot.mp<1||B.mp>=maxMP()||c.busy,on:{click:()=>{S.pot.mp--;B.mp=Math.min(maxMP(),B.mp+15);save();SFX.coin();dmgTxt("+15 MP","#7fd1ff",$("hero"));updHud();renderBar();}}},el("b",null,"💧"),"마나",el("small",null,"x"+S.pot.mp))));
+    }
+    kids.push(el("button",{class:"btn",disabled:c.sel==null||c.busy,on:{click:strike}},c.sel==null?"공격할 선지를 고르세요":"⚔️ 공격! (선지를 한 번 더 눌러도 돼요)"));
+  } else if(!c.busy){
+    const dead=B.hp<=0, last=!B.tower&&B.i>=B.list.length-1;
+    kids.push(el("button",{class:"btn",on:{click:()=>{ stopSpeak(); if(dead) return B.tower?endTower():defeat(); if(last) return endRun(); B.i++; B.cur=fresh(); if(B.tower) B.list.push(towerPick()); battle(true); }}},dead?(B.tower?"🏁 탑 결과":"💀 ..."):(B.tower?"🗼 다음 층 ▶":(last?"🏁 퀘스트 결과":"👉 다음 몬스터"))));
+  }
+  bb.replaceChildren(...kids);
+}
+function useUlt(){
+  const c=B.cur, n=B.list[B.i]; if(c.done||c.busy||B.fury<100) return; B.fury=0; SFX.ult(); const cl=S.cls; const [x,y]=ctr($("hero"));
+  burst(x,y,["#b45cff","#ffcf4d","#ff3b8a"],40,8); ringFx(x,y,"#ffcf4d"); flashGold(); banner(ULT[cl][0]+" "+ULT[cl][1]+"!","#ff3b8a"); say(ULT[cl][1]+"!",1.1,1.2);
+  const ord=elimOrder(n);
+  if(cl==="w"){ for(const j of ord){ if(c.elim.length>=2) break; if(!c.elim.includes(j)) c.elim.push(j); } B.hp=Math.min(maxHP(),B.hp+25); }
+  else if(cl==="m"){ for(const j of ord){ if(c.elim.length>=3) break; if(!c.elim.includes(j)) c.elim.push(j); } }
+  else { B.freeze=15; c.key=1; renderPass(); }
+  if(c.sel!=null&&c.elim.includes(c.sel)) c.sel=null;
+  updHud(); renderSheet(); renderBar();
+}
+function strike(){
+  const n=B.list[B.i], it=D[n], c=B.cur, z=it.lv; if(c.done||c.busy||c.sel==null) return;
+  stopTimer(); c.busy=1; c.done=1; c.ok=c.sel===it.a?1:0; const mon=bmon(n); const hx=$("hero"), fx=$("foe"), sl=$("slash");
+  renderSheet(); renderBar();
   const hints=(c.tip?1:0)+(c.key?1:0)+c.elim.length;
-  const first=!S.cleared[n], mult=(B.replay||!first)?.3:1;
   if(c.ok){
+    const first=!S.cleared[n], mult=(B.replay||!first)?.3:1, crit=hints===0&&!B.tower?true:(B.tower&&hints===0);
     B.combo++; B.maxCombo=Math.max(B.maxCombo,B.combo); S.bestCombo=Math.max(S.bestCombo,B.combo);
-    const crit=hints===0;
-    let xp=Math.round((10+5*z)*(crit?1.5:1)*(1+Math.min(.5,B.combo*.05))*(1+sum("xp"))*mult*(boss?2:1));
-    let g=Math.round((8*z)*(1+(CLS[S.cls].gold||0)+sum("gold"))*(crit?1.2:1)*mult*(boss?2:1));
-    S.cleared[n]=1; S.lastPick[n]=null; S.kills++; dly().kills++; S.xp+=0; S.gold+=g; B.xp+=xp; B.gold+=g; B.kills++; B.res[B.i]=1;
-    const from=S.lv, ups=gainXp(xp); if(ups) B.ups.push(from);
-    if(ups){ B.hp=maxHP(); B.mp=maxMP(); }
-    c.msg=crit?"💥 CRITICAL! 몬스터를 처치했다!":"⚔️ 몬스터를 처치했다!";
-    c.rew=["+"+xp+" XP","+"+g+" 🪙"].concat(B.combo>1?["🔥 "+B.combo+" 콤보"]:[]).concat(mult<1?["복습 보상 30%"]:[]);
-    save(); crit?SFX.crit():SFX.win(); say(crit?V_CRIT[Math.floor(Math.random()*2)]:V_OK[Math.floor(Math.random()*4)]); if(mon){ mon.classList.add("dead"); } floatTxt(crit?"CRITICAL!":"HIT!","#ffc83d");
-    battle(true);
-    const m2=document.getElementById("mon"); if(m2) m2.classList.add("dead");
-    if(ups) setTimeout(()=>levelUpModal(from),700);
-  } else {
-    B.combo=0; B.res[B.i]=0; S.wrong[n]=(S.wrong[n]||0)+1; S.lastPick[n]=c.sel; S.tag[it.t[c.sel]]=(S.tag[it.t[c.sel]]||0)+1;
-    let dmg=Math.round((14+6*z)*(boss?1.5:1)*(1-sum("red")));
-    let blocked=false; if(B.shield){ B.shield=false; dmg=0; blocked=true; }
-    B.hp-=dmg; const tr=TRAPS[it.t[c.sel]];
-    c.msg=(blocked?"🍀 부적이 피해를 막았다! ":"💢 ")+tr[0]+" "+tr[1]+"의 함정에 걸렸다! "+(dmg?`(-${dmg} HP)`:"");
-    c.rew=null; save();
-    say(blocked?"부적이 막아줬어요!":"아쉽다! "+tr[1]+"의 함정이에요.",1.05,.9); if(dmg){ SFX.hurt(); const f=document.createElement("div"); f.className="flash"; document.body.append(f); setTimeout(()=>f.remove(),520); floatTxt("-"+dmg,"#ff5d73"); view.classList.add("shake"); setTimeout(()=>view.classList.remove("shake"),500); }
-    battle(true);
-  }
+    const bm=mon.boss?2:1;
+    let xp=B.tower?Math.round((6+3*z)*(crit?1.5:1)*(1+Math.min(.5,B.combo*.05))*(1+sum("xp"))):Math.round((10+5*z)*(crit?1.5:1)*(1+Math.min(.5,B.combo*.05))*(1+sum("xp"))*mult*bm);
+    let g=B.tower?Math.round(3*z*(1+B.i*.05)):Math.round((8*z)*(1+(CLS[S.cls].gold||0)+sum("gold"))*(crit?1.2:1)*mult*bm);
+    const dmg=Math.round((18+S.lv*3+z*6)*(crit?2:1)*(1+B.combo*.08));
+    if(!B.tower){ S.cleared[n]=1; S.lastPick[n]=null; delete S.wrong[n]; S.kills++; dly().kills++; S.gold+=g; } else { S.gold+=g; dly().kills++; }
+    if(crit) S.crits=(S.crits||0)+1;
+    B.xp+=xp; B.gold+=g; B.kills++; B.res[B.i]=1; B.fury=Math.min(100,B.fury+(crit?50:34));
+    const from=S.lv, ups=gainXp(xp); if(ups){ B.hp=B.tower?B.hp:maxHP(); B.mp=maxMP(); }
+    const lastBossHit=!(mon.camp&&B.i<B.list.length-1);
+    let loot=null; if(mult>=1&&Math.random()<.22){ const r=Math.random(); if(r<.3){ S.pot.hp++; loot="❤️ 체력 물약"; } else if(r<.55){ S.pot.mp++; loot="💧 마나 물약"; } else { const bg=Math.round(g*2+10); S.gold+=bg; B.gold+=bg; loot="🪙 +"+bg+" 골드"; } }
+    c.msg=crit?"💥 CRITICAL! "+(lastBossHit?"몬스터를 처치했다!":"보스에게 큰 피해!"):"⚔️ "+(lastBossHit?"몬스터를 처치했다!":"보스에게 피해를 입혔다!");
+    c.rew=["+"+xp+" XP","+"+g+" 🪙"].concat(B.combo>1?["🔥 "+B.combo+" 콤보"]:[]).concat(mult<1?["복습 30%"]:[]).concat(loot?["🎁 "+loot]:[]);
+    save();
+    // animation
+    hx.classList.add("dash"); setTimeout(()=>SFX.slash(),150);
+    setTimeout(()=>{ const [x,y]=ctr($("mon")); sl.style.setProperty("--sc",crit?"#ffd34d":"#fff"); sl.classList.remove("go"); void sl.offsetWidth; sl.classList.add("go");
+      fx.classList.add("hit"); burst(x,y,crit?["#ffd34d","#fff","#ff9d2e"]:["#fff","#bfe6ff"],crit?44:24,crit?10:7); ringFx(x,y,crit?"#ffd34d":"#fff"); dmgTxt("-"+dmg,crit?"#ffd34d":"#fff",$("mon"),crit); if(crit){ flashGold(); shakeApp(); banner("CRITICAL!","#ffd34d"); SFX.crit(); } else SFX.win();
+      const fh=$("fhp"); if(fh) fh.style.width=(foeFrac()*100)+"%"; },190);
+    setTimeout(()=>{ hx.classList.remove("dash"); if(lastBossHit){ fx.classList.remove("hit"); fx.classList.add("die"); const [x,y]=ctr($("mon")); burst(x,y,["#ffd34d","#ff9d2e","#fff"],30,6); coinFx(x,y,Math.min(14,4+Math.round(g/4))); } else fx.classList.remove("hit"); },520);
+    const cm=B.combo; const cb=cm===3?["NICE!","#7dff9e"]:cm===5?["GREAT!","#4db5ff"]:cm===8?["AMAZING!","#c58bff"]:cm===12?["UNSTOPPABLE!","#ff9d2e"]:cm===20?["GODLIKE!!","#ff3b8a"]:null;
+    if(cb) setTimeout(()=>{ banner(cb[0],cb[1]); SFX.lvl(); },900);
+    if(loot) setTimeout(()=>{ SFX.chest(); const [x,y]=ctr($("hero")); coinFx(x+40,y,10); toast("🎁 보물상자! "+loot); },1100);
+    say(crit?V_CRIT[Math.floor(Math.random()*2)]:V_OK[Math.floor(Math.random()*4)]);
+    if(B.fury>=100) setTimeout(()=>{ toast("🌟 궁극기 준비 완료!"); },1300);
+    setTimeout(()=>{ c.busy=0; updHud(); renderSheet(); renderBar(); if(ups) levelUpModal(from); checkAch(); },cb||loot?1350:950);
+  } else wrongSeq(n,it,c,mon,false);
 }
-function summary(win){
+function timeoutHit(){ const n=B.list[B.i], it=D[n], c=B.cur, mon=bmon(n); if(c.done||c.busy) return; c.busy=1; c.done=1; c.ok=0; c.sel=null; renderSheet(); renderBar(); wrongSeq(n,it,c,mon,true); }
+function wrongSeq(n,it,c,mon,timeout){
+  const z=it.lv, hx=$("hero"), fx=$("foe");
+  B.combo=0; B.res[B.i]=0; S.wrong[n]=(S.wrong[n]||0)+1; S.lastPick[n]=timeout?null:c.sel; if(!timeout) S.tag[it.t[c.sel]]=(S.tag[it.t[c.sel]]||0)+1;
+  let dmg=B.tower?1:Math.round((14+6*z)*(mon.boss?1.5:1)*(bossPhase()===3?1.3:1)*(1-sum("red")));
+  let blocked=false; if(!B.tower&&B.shield){ B.shield=false; dmg=0; blocked=true; }
+  B.hp-=dmg; const tr=timeout?null:TRAPS[it.t[c.sel]];
+  c.msg=timeout?"⏰ 시간 초과! 몬스터의 반격! "+(dmg?`(-${dmg}${B.tower?" ❤️":" HP"})`:""):((blocked?"🍀 부적이 피해를 막았다! ":"💢 ")+tr[0]+" "+tr[1]+"의 함정에 걸렸다! "+(dmg?`(-${dmg}${B.tower?" ❤️":" HP"})`:""));
+  c.rew=null; save();
+  fx.classList.add("lunge"); setTimeout(()=>SFX.boom(),200);
+  setTimeout(()=>{ fx.classList.remove("lunge"); if(dmg){ hx.classList.add("hurt"); const [x,y]=ctr(hx); burst(x,y,["#ff3b5c","#ff9d2e"],26,7); ringFx(x,y,"#ff3b5c"); dmgTxt("-"+dmg,"#ff5d73",hx,true); const f=el("div",{class:"flash"}); document.body.append(f); setTimeout(()=>f.remove(),520); shakeApp(); SFX.hurt(); } else { dmgTxt("BLOCK!","#7dff9e",hx,true); SFX.coin(); } updHud(); },300);
+  setTimeout(()=>{ hx.classList.remove("hurt"); if(B.hp<=0) hx.classList.add("down"); },780);
+  say(timeout?"시간 초과!":(blocked?"부적이 막아줬어요!":"아쉽다! "+tr[1]+"의 함정이에요."),1.05,.9);
+  setTimeout(()=>{ c.busy=0; updHud(); renderSheet(); renderBar(); },1050);
+}
+function summary(){
   return el("div",{class:"stat"},el("div",null,el("b",null,B.kills),"처치"),el("div",null,el("b",null,"+"+B.xp),"XP"),el("div",null,el("b",null,"+"+B.gold),"골드"),el("div",null,el("b",null,B.maxCombo),"최대 콤보"));
 }
 function defeat(){
-  SFX.hurt(); setTimeout(()=>say("기절했어요. 다시 도전해요!",1,.8),400);
+  stopTimer(); SFX.hurt(); setTimeout(()=>say("기절했어요. 다시 도전해요!",1,.8),400); $("app").classList.remove("danger");
   const m=modal([el("div",{class:"em"},"💀"),el("h2",{class:"title"},"기절했다..."),el("p",null,"HP가 모두 소진되었어요. 마을에서 쉬고 다시 도전하세요!\n처치한 몬스터와 보상은 그대로 유지됩니다."),summary(),
     el("button",{class:"btn",on:{click:()=>{m.remove();const q=B.q;B=null;startQuest(q);}}},"🔁 다시 도전"),el("div",{style:"height:10px"}),el("button",{class:"btn ghost",on:{click:()=>{m.remove();B=null;tab("quest");}}},"🗺️ 퀘스트 목록")]);
 }
+function endTower(){
+  stopTimer(); $("app").classList.remove("danger"); const fl=B.kills; const nb=fl>(S.tower.best||0); S.tower.best=Math.max(S.tower.best||0,fl); S.tower.runs=(S.tower.runs||0)+1;
+  const bonus=fl*6, bx=fl*4; S.gold+=bonus; const from=S.lv, ups=gainXp(bx); save(); checkAch(); confetti(); SFX.lvl(); setTimeout(()=>say(nb?"신기록! "+fl+"층!":fl+"층까지 올라갔어요!",1,1.1),500);
+  const txt="🗼 독해왕국 무한의 탑 · "+S.name+"\n"+fl+"층 돌파! 최고 콤보 "+B.maxCombo+(nb?" · 🏆 신기록":"");
+  const m=modal([el("div",{class:"em"},nb?"🏆":"🗼"),el("h2",{class:"title gold"},nb?"신기록!":"탑 도전 종료"),el("p",null,fl+"층까지 올랐어요. 최고 기록 "+S.tower.best+"층"),
+    el("div",{class:"stat"},el("div",null,el("b",null,fl),"층"),el("div",null,el("b",null,"+"+bx),"XP"),el("div",null,el("b",null,"+"+bonus),"골드"),el("div",null,el("b",null,B.maxCombo),"최대 콤보")),
+    el("button",{class:"btn kakao",on:{click:async()=>{ if(navigator.share){ try{ await navigator.share({text:txt}); return; }catch(e){ if(e&&e.name==="AbortError") return; } } try{ const a=document.createElement("textarea"); a.value=txt; document.body.append(a); a.select(); document.execCommand("copy"); a.remove(); toast("복사됐어요! 카톡에 붙여넣기 📋"); }catch(e){} }}},"💬 카톡으로 자랑하기"),el("div",{style:"height:10px"}),
+    el("button",{class:"btn",on:{click:()=>{m.remove();B=null;startTower();}}},"🔁 다시 도전"),el("div",{style:"height:10px"}),el("button",{class:"btn ghost",on:{click:()=>{m.remove();B=null;tab("town");}}},"🏠 마을로")]);
+  if(ups) setTimeout(()=>levelUpModal(from),400);
+}
 function endRun(){
+  stopTimer(); $("app").classList.remove("danger");
   const q=B.q, all=qDone(q), boss=q%20===19; let bonus=null;
   if(all && !B.replay && B.res.every(x=>x===1) ){
     const z=Math.floor(q/20)+1, g=(boss?80:40)*z; S.gold+=g; B.gold+=g; S.pot[Math.random()<.5?"hp":"mp"]++; bonus="🎁 퀘스트 클리어 보너스 +"+g+" 🪙 & 물약 1개"; save(); SFX.coin();
   }
   if(all){ confetti(); SFX.lvl(); setTimeout(()=>say(boss?"보스 격파! 축하해요!":"퀘스트 클리어!",1,1.15),500); }
+  checkAch();
   const next=q+1<QN?q+1:null;
   const m=modal([el("div",{class:"em"},all?(boss?"🏆":"🎉"):"🏁"),el("h2",{class:"title gold"},all?(boss?"보스 격파!":"퀘스트 클리어!"):"전투 종료"),
     el("p",null,all?(bonus||"이 퀘스트의 몬스터를 모두 물리쳤어요!"):"아직 쓰러뜨리지 못한 몬스터가 남았어요. 다시 도전해 보세요!"),summary(),
     next!==null&&all?el("button",{class:"btn",on:{click:()=>{m.remove();B=null;startQuest(next);}}},"➡️ 다음 퀘스트"):el("button",{class:"btn",on:{click:()=>{m.remove();const qq=B.q;B=null;startQuest(qq);}}},"🔁 남은 몬스터 도전"),
     el("div",{style:"height:10px"}),el("button",{class:"btn ghost",on:{click:()=>{m.remove();B=null;tab("quest");}}},"🗺️ 퀘스트 목록")]);
 }
+
 document.documentElement.style.setProperty("--fs",[14.5,16,18][S.fs]+"px");
 if(!S.cls) create(); else tab(S.tab||"town");
 </script>
