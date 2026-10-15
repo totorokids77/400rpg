@@ -196,7 +196,7 @@ input.nm{width:100%;padding:13px;border-radius:14px;border:2px solid var(--line)
 .ntab b{font-size:13px}.ntab span{font-size:11.5px;color:var(--sub);display:block}
 .ntab .tg2{margin-left:auto;font-size:11px;font-weight:900;color:var(--bad)}.ntab .tg2.ok{color:var(--ok)}
 #fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:15}
-.arena2{position:relative;height:168px;margin:0 10px 4px;border-radius:20px;overflow:hidden;border:2px solid var(--line);box-shadow:0 8px 20px rgba(0,0,0,.45);flex:none;--ch:0}
+.arena2{position:relative;height:150px;margin:0 0 8px;border-radius:20px;overflow:hidden;border:2px solid var(--line);box-shadow:0 8px 20px rgba(0,0,0,.45);flex:none;--ch:0}
 .arena2 .sky{position:absolute;inset:0;background:linear-gradient(#5aa8ff,#bfe6ff 62%,#6ec36a 62%)}
 .arena2.z2 .sky{background:linear-gradient(#0d1f2d,#1f4a3a 62%,#12301f 62%)}
 .arena2.z3 .sky{background:linear-gradient(#ff9d52,#ffd9a0 62%,#e0b25f 62%)}
@@ -260,6 +260,16 @@ input.nm{width:100%;padding:13px;border-radius:14px;border:2px solid var(--line)
 .ach{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;margin-bottom:6px;background:#0a07204d;font-size:12.5px;opacity:.45}
 .ach.on{opacity:1;border:1px solid var(--gold);background:#3b2a0c}.ach b{font-size:13px;display:block}.ach span{color:var(--sub);font-size:11px}.ach .ic{font-size:24px}
 
+.bars.g2{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px}
+.bars.g2 .bar.fury{grid-column:1/-1;height:8px}
+.bhud{padding-bottom:4px!important}
+.bhud .x{width:30px;height:30px}
+.sk{padding:4px 2px;font-size:10px}.sk b{font-size:16px}.skills{margin-bottom:6px!important;gap:5px}
+.bbar{padding:6px 12px max(8px,env(safe-area-inset-bottom))!important}
+.bbar .btn{padding:11px;font-size:15px;box-shadow:0 4px 0 #a35b00,0 8px 14px rgba(0,0,0,.4)}
+.bbar .ult{padding:8px;font-size:13px;margin-bottom:6px}
+.qpips{padding-bottom:4px}
+@media (max-height:760px){.arena2{height:118px}.arena2 .pl .spr{font-size:44px}.arena2 .foe .spr{font-size:50px}.arena2 .foe.boss .spr{font-size:64px}.scroll-card{font-size:15px;line-height:1.7;padding:12px}.arena2 .props{top:22px;font-size:26px}.bhud{padding-top:max(6px,env(safe-area-inset-top))!important}}
 @media (min-width:520px){body{padding:16px 0}#app{height:calc(100dvh - 32px);border-radius:30px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(80,50,200,.35)}}
 </style>
 </head>
@@ -743,7 +753,7 @@ function startTower(){
   B.list.push(towerPick()); battle(true);
 }
 function elimOrder(n){ const it=D[n],pri={"이":0,"상":1,"반":2,"비":3,"과":4,"세":5,"부":6}; return it.c.map((_,j)=>j).filter(j=>j!==it.a).sort((x,y)=>pri[it.t[x]]-pri[it.t[y]]); }
-function layer(sc){ const back=sc.querySelector(".back"),sheet=sc.querySelector(".sheet"); sheet.style.setProperty("--sh",Math.max(240,sc.clientHeight-26)+"px"); const upd=()=>{ const bh=back.offsetHeight||1; sc.style.setProperty("--p",Math.max(0,Math.min(1,sc.scrollTop/(bh*.5))).toFixed(3)); }; sc.addEventListener("scroll",upd,{passive:true}); upd(); }
+function layer(sc){ const back=sc.querySelector(".back"),sheet=sc.querySelector(".sheet"); sheet.style.setProperty("--sh",Math.max(240,sc.clientHeight-26)+"px"); const ar=sc.querySelector(".arena2"); const upd=()=>{ const bh=back.offsetHeight||1, off=ar?ar.offsetHeight+8:0; sc.style.setProperty("--p",Math.max(0,Math.min(1,(sc.scrollTop-off)/(bh*.5))).toFixed(3)); }; sc.addEventListener("scroll",upd,{passive:true}); upd(); }
 function bmon(n){ const it=D[n], z=ZONES[it.lv-1]; const cb=!B.tower&&B.q%20===19, tb=B.tower&&(B.i+1)%5===0; if(cb||tb) return {ic:z.boss[0],name:z.boss[1],boss:true,camp:cb}; return Object.assign({camp:false},monOf(n)); }
 function bossPhase(){ if(B.tower||B.q%20!==19) return 1; const L=B.list.length; return B.i<L-3?1:B.i<L-1?2:3; }
 function foeFrac(){ const c=B.cur, mon=bmon(B.list[B.i]); if(mon.camp){ const L=B.list.length; return Math.max(0,(L-B.i-(c.done&&c.ok?1:0))/L); } return c.done&&c.ok?0:1; }
@@ -764,8 +774,8 @@ function battle(newScreen){
   const pass=el("div",{class:"scroll-card",id:"pass"});
   const back=el("div",{class:"back"},pass);
   const sheet=el("div",{class:"sheet",id:"sheet"});
-  const scroll=el("div",{class:"scroll stage",id:"stg"},back,sheet);
-  show(hud,pips,arena,scroll,el("div",{class:"bbar",id:"bbar"}));
+  const scroll=el("div",{class:"scroll stage",id:"stg"},arena,back,sheet);
+  show(hud,pips,scroll,el("div",{class:"bbar",id:"bbar"}));
   const hx=$("hero"), fx=$("foe"); const dx=Math.max(80,fx.getBoundingClientRect().left-hx.getBoundingClientRect().right+30); $("arena").style.setProperty("--dx",dx+"px"); hx.style.setProperty("--dx",dx+"px"); fx.style.setProperty("--dx",dx+"px");
   renderPass(); renderSheet(); renderBar(); updHud(); updTimer(); layer(scroll); startTimer();
   if(mon.boss&&!c.intro){ c.intro=1; setTimeout(()=>{ banner(mon.camp?"BOSS BATTLE!":"BOSS FLOOR!","#ff3b5c"); SFX.boom(); say("보스 등장! "+mon.name,.95,.8); },450); }
@@ -778,7 +788,7 @@ function updHud(){
   const mus=el("button",{class:"x",on:{click:()=>{S.mus=S.mus?0:1;save();applyMusic();updHud();}}},S.mus?"🎵":"🔇");
   const fury=el("div",{class:"bar fury"+(B.fury>=100?" ready":"")},el("i",{style:`width:${Math.min(100,B.fury)}%`}));
   const bars=B.tower?el("div",{class:"bars"},el("div",{class:"lbl"},el("span",{class:"hearts"},"❤️".repeat(Math.max(0,B.hp))+"🖤".repeat(Math.max(0,3-B.hp))),el("span",null,"🗼 "+(B.i+1)+"층")),el("div",{style:"height:3px"}),el("div",{class:"lbl"},el("span",null,"🌟 분노 게이지"),el("span",null,Math.min(100,Math.round(B.fury))+"%")),fury)
-   :el("div",{class:"bars"},bar("hp",B.hp,maxHP(),"❤️ HP"),el("div",{style:"height:3px"}),bar("mp",B.mp,maxMP(),"💧 MP"),el("div",{style:"height:3px"}),fury);
+   :el("div",{class:"bars g2"},bar("hp",B.hp,maxHP(),"❤️ HP"),bar("mp",B.mp,maxMP(),"💧 MP"),fury);
   h.replaceChildren(flee,bars,mus,el("div",{class:"combo"},B.combo>1?"🔥"+B.combo:""));
   $("app").classList.toggle("danger",B.tower?B.hp<=1:B.hp/maxHP()<.3&&B.hp>0);
 }
@@ -829,8 +839,9 @@ function renderBar(){
   }
   bb.replaceChildren(...kids);
 }
+function topScroll(){ const st=$("stg"); if(st) st.scrollTo({top:0,behavior:"smooth"}); }
 function useUlt(){
-  const c=B.cur, n=B.list[B.i]; if(c.done||c.busy||B.fury<100) return; B.fury=0; SFX.ult(); const cl=S.cls; const [x,y]=ctr($("hero"));
+  topScroll(); const c=B.cur, n=B.list[B.i]; if(c.done||c.busy||B.fury<100) return; B.fury=0; SFX.ult(); const cl=S.cls; const [x,y]=ctr($("hero"));
   burst(x,y,["#b45cff","#ffcf4d","#ff3b8a"],40,8); ringFx(x,y,"#ffcf4d"); flashGold(); banner(ULT[cl][0]+" "+ULT[cl][1]+"!","#ff3b8a"); say(ULT[cl][1]+"!",1.1,1.2);
   const ord=elimOrder(n);
   if(cl==="w"){ for(const j of ord){ if(c.elim.length>=2) break; if(!c.elim.includes(j)) c.elim.push(j); } B.hp=Math.min(maxHP(),B.hp+25); }
@@ -841,7 +852,7 @@ function useUlt(){
 }
 function strike(){
   const n=B.list[B.i], it=D[n], c=B.cur, z=it.lv; if(c.done||c.busy||c.sel==null) return;
-  stopTimer(); c.busy=1; c.done=1; c.ok=c.sel===it.a?1:0; const mon=bmon(n); const hx=$("hero"), fx=$("foe"), sl=$("slash");
+  topScroll(); stopTimer(); c.busy=1; c.done=1; c.ok=c.sel===it.a?1:0; const mon=bmon(n); const hx=$("hero"), fx=$("foe"), sl=$("slash");
   renderSheet(); renderBar();
   const hints=(c.tip?1:0)+(c.key?1:0)+c.elim.length;
   if(c.ok){
@@ -874,7 +885,7 @@ function strike(){
     setTimeout(()=>{ c.busy=0; updHud(); renderSheet(); renderBar(); if(ups) levelUpModal(from); checkAch(); },cb||loot?1350:950);
   } else wrongSeq(n,it,c,mon,false);
 }
-function timeoutHit(){ const n=B.list[B.i], it=D[n], c=B.cur, mon=bmon(n); if(c.done||c.busy) return; c.busy=1; c.done=1; c.ok=0; c.sel=null; renderSheet(); renderBar(); wrongSeq(n,it,c,mon,true); }
+function timeoutHit(){ const n=B.list[B.i], it=D[n], c=B.cur, mon=bmon(n); if(c.done||c.busy) return; topScroll(); c.busy=1; c.done=1; c.ok=0; c.sel=null; renderSheet(); renderBar(); wrongSeq(n,it,c,mon,true); }
 function wrongSeq(n,it,c,mon,timeout){
   const z=it.lv, hx=$("hero"), fx=$("foe");
   B.combo=0; B.res[B.i]=0; S.wrong[n]=(S.wrong[n]||0)+1; S.lastPick[n]=timeout?null:c.sel; if(!timeout) S.tag[it.t[c.sel]]=(S.tag[it.t[c.sel]]||0)+1;
